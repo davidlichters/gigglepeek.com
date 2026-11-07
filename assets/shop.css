@@ -205,3 +205,7 @@ p{margin:0 0 var(--s3)}
   .fuss{padding-bottom:var(--s6)}
   .kontakt{grid-template-columns:1fr 1fr}
 }
+/* vorschauband (aus bau.py) */
+.vorschauband{background:var(--tinte);color:var(--weiss);font-size:14px;font-weight:700;text-align:center;padding:var(--s2) var(--s4);line-height:1.4}
+@media (max-width:859px){.streifen img{height:288px}}
+/* /vorschauband */
