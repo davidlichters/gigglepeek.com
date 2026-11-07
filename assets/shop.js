@@ -22,11 +22,27 @@
   }
 
   var knopfpreis = document.getElementById('knopfpreis');
-  document.querySelectorAll('input[name="menge"]').forEach(function (r) {
-    r.addEventListener('change', function () {
-      if (knopfpreis) knopfpreis.textContent = r.getAttribute('data-preis');
-    });
-  });
+  var viele = document.getElementById('viele');
+  var vieleRadio = document.querySelector('input[name="menge"][value="4"]');
+  var zahlViele = function () { var n = parseInt(viele.value, 10); if (isNaN(n) || n < 4) n = 4; if (n > 99) n = 99; return n; };
+  var preis = function () {
+    var r = document.querySelector('input[name="menge"]:checked');
+    if (!r || !knopfpreis) return;
+    if (r === vieleRadio) {
+      var je = parseFloat(r.getAttribute('data-je').replace(/[^0-9.]/g, ''));
+      knopfpreis.textContent = '$' + (je * zahlViele()).toFixed(2);
+    } else knopfpreis.textContent = r.getAttribute('data-preis');
+  };
+  document.querySelectorAll('input[name="menge"]').forEach(function (r) { r.addEventListener('change', preis); });
+  // Stufe 4+: Minus, Plus und Eingabe waehlen die Stufe und rechnen den Preis (Richter 4)
+  if (viele && vieleRadio) {
+    var setzeViele = function (n) { viele.value = Math.max(4, Math.min(99, n)); vieleRadio.checked = true; preis(); };
+    document.querySelector('.stufe__minus').addEventListener('click', function (e) { e.preventDefault(); setzeViele(zahlViele() - 1); });
+    document.querySelector('.stufe__plus').addEventListener('click', function (e) { e.preventDefault(); setzeViele(zahlViele() + 1); });
+    viele.addEventListener('input', function () { vieleRadio.checked = true; preis(); });
+    viele.addEventListener('change', function () { setzeViele(zahlViele()); });
+    viele.addEventListener('click', function () { vieleRadio.checked = true; preis(); });
+  }
 
   var hinweis = document.getElementById('hinweis');
   var zeit;
@@ -78,6 +94,8 @@
     };
     mehr.addEventListener('click', function () {
       if (vorrat) return zeige();
+      var inline = document.getElementById('bewertungsdaten');
+      if (inline) { try { vorrat = JSON.parse(inline.textContent); return zeige(); } catch (e) { vorrat = null; } }
       mehr.disabled = true;
       fetch(mehr.getAttribute('data-quelle')).then(function (r) { return r.json(); })
         .then(function (d) { vorrat = d; mehr.disabled = false; zeige(); })

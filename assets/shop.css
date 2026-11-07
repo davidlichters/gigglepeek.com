@@ -58,6 +58,19 @@ mark.offen{background:#FFE45C;color:#3b2d00;border-radius:3px;padding:0 3px;-web
 .stufe__preis{font-size:17px;font-weight:800}
 .stufe__je{font-size:14px;color:var(--grau)}
 .mehr4{font-size:14px;margin:7px 0 9px;color:var(--grau)}
+/* Richter 4: Stufe 4+ ueber volle Breite, Mengenfeld rechts */
+.stufe--viele{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;text-align:left;padding:5px 8px 5px 12px;min-height:36px}
+/* Mengenfeld erst sichtbar, wenn 4+ gewaehlt ist: so bleibt der Kaufknopf auf 390x844 im ersten Bildschirm */
+.stufe--viele .stufe__zahl{display:none}
+.stufe--viele:has(input:checked) .stufe__zahl{display:flex}
+.stufe__mehr{font-size:14px;color:var(--grau)}
+.stufe--viele:has(input:checked) .stufe__mehr{display:none}
+.stufe--viele .stufe__je{margin-right:auto}
+.stufe__zahl{display:flex;align-items:center;border:1px solid var(--linie);border-radius:10px;background:var(--weiss);overflow:hidden}
+.stufe__zahl button{width:40px;height:40px;border:0;background:transparent;font:inherit;font-size:20px;font-weight:700;color:var(--tinte);cursor:pointer}
+.stufe .stufe__zahl input{position:static;opacity:1;pointer-events:auto;width:40px;height:40px;border:0;text-align:center;font:inherit;font-size:17px;font-weight:700;-moz-appearance:textfield;background:transparent;color:var(--tinte)}
+.stufe__zahl input::-webkit-outer-spin-button,.stufe__zahl input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.stufen + .knopf{margin-top:8px}
 .knopf{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;background:var(--tinte);color:#fff;font:700 17px/1 Figtree,sans-serif;padding:0 22px;min-height:52px;cursor:pointer;text-decoration:none}
 .knopf:hover{background:#000}
 .kaufen{width:100%}
