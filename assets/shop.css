@@ -106,6 +106,7 @@ p{margin:0 0 var(--s3)}
 .bewertungen{display:grid;gap:var(--s3)}
 .kundenfotos{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);margin:0 0 var(--s4)}
 .kundenfotos a{display:block}
+.kundenfotos a:only-child{grid-column:1/-1}
 .kundenfotos img{width:100%;height:auto;aspect-ratio:1000/680;object-fit:cover;border-radius:var(--r)}
 .bewertung,.karte{background:var(--weiss);border:1px solid var(--linie);border-radius:var(--r);padding:var(--s4)}
 .bewertung__kopf{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);margin-bottom:var(--s2)}
@@ -199,6 +200,7 @@ p{margin:0 0 var(--s3)}
   .faq{max-width:760px}
   .bewertungen{grid-template-columns:repeat(3,1fr);align-items:start}
   .kundenfotos{grid-template-columns:repeat(auto-fill,minmax(260px,320px))}
+  .kundenfotos a:only-child{grid-column:auto}
   .fuss__in{grid-template-columns:2fr 1.3fr 1fr 1.6fr}
   .fuss{padding-bottom:var(--s6)}
   .kontakt{grid-template-columns:1fr 1fr}
