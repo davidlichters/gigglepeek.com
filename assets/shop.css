@@ -90,8 +90,10 @@ mark.offen{background:#FFE45C;color:#3b2d00;border-radius:3px;padding:0 3px;-web
 .sterne__reihe .aus{fill:#DDD0BA}
 .bewertungen__zahl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 16px;font-size:16px}
 .bewertungen{display:grid;gap:12px}
-.kundenfotos{display:flex;gap:8px;overflow-x:auto;margin:0 0 16px;padding-bottom:4px}
-.kundenfotos img{width:120px;height:120px;object-fit:cover;border-radius:10px;flex:none}
+.kundenfotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:0 0 16px}
+.kundenfotos a{display:block}
+.kundenfotos img{display:block;width:100%;height:auto;aspect-ratio:1000/680;object-fit:cover;border-radius:10px}
+@media(min-width:900px){.kundenfotos{grid-template-columns:repeat(auto-fill,minmax(260px,320px))}}
 .mehr-knopf{display:block;margin:16px auto 0;min-height:48px;padding:0 24px;border:1.5px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
 .mehr-knopf:disabled{opacity:.5}
 .bewertung{background:var(--weiss);border:1px solid var(--linie);border-radius:14px;padding:14px 16px}
