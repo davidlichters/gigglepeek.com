@@ -70,7 +70,15 @@
       document.getElementById('kaufen').scrollIntoView({ behavior: 'smooth' });
     });
   }
-  // Bewertungen: 10 im HTML, weitere je 10 pro Klick aus assets/bewertungen.json (erst beim ersten Klick geladen)
+  // Bewertungen: 5 im HTML, weitere je 10 pro Klick aus assets/bewertungen.json (erst beim ersten Klick geladen)
+  // Kritik 07.11.: lange Bewertungen auf 4 Zeilen, "Read more" nur wenn der Text wirklich abgeschnitten ist
+  var kuerze = function (a) {
+    var tx = a.querySelector('.bewertung__text'), rm = a.querySelector('.bewertung__mehr');
+    if (!tx || !rm) return;
+    if (tx.scrollHeight > tx.clientHeight + 2) rm.hidden = false;
+    rm.addEventListener('click', function () { tx.classList.add('offen'); rm.remove(); });
+  };
+  document.querySelectorAll('.bewertung').forEach(kuerze);
   var mehr = document.getElementById('mehrbewertungen');
   var liste = document.getElementById('bewertungsliste');
   if (mehr && liste) {
@@ -83,12 +91,16 @@
       for (var i = 0; i < 5; i++) { var s = el('i', i < b.n ? 'an' : 'aus'); s.innerHTML = stern; r.appendChild(s); }
       k.appendChild(r); k.appendChild(el('span', 'bewertung__monat', b.monat)); a.appendChild(k);
       if (b.titel) a.appendChild(el('h3', '', b.titel));
-      b.text.split('\n\n').forEach(function (t) { a.appendChild(el('p', '', t)); });
+      var tx = el('p', 'bewertung__text');
+      b.text.split('\n\n').forEach(function (t, i) { if (i) { tx.appendChild(el('br')); tx.appendChild(el('br')); } tx.appendChild(document.createTextNode(t)); });
+      a.appendChild(tx);
+      var rm = el('button', 'bewertung__mehr', 'Read more'); rm.type = 'button'; rm.hidden = true; a.appendChild(rm);
       a.appendChild(el('p', 'bewertung__name', b.name));
       return a;
     };
     var zeige = function () {
-      vorrat.slice(pos, pos + 10).forEach(function (b) { liste.appendChild(karte(b)); });
+      var neu = vorrat.slice(pos, pos + 10).map(function (b) { var k = karte(b); liste.appendChild(k); return k; });
+      neu.forEach(kuerze);
       pos += 10;
       if (pos >= vorrat.length) mehr.remove();
     };
